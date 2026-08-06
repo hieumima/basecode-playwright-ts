@@ -1,0 +1,1 @@
+Giao diện Web thực tế bị thiếu nhiều khối nội dung (section) quan trọng so với bản thiết kế Figma, bao gồm danh mục sản phẩm con phía trên, tiêu đề trang, nút 'Xem thêm' và khối văn bản giới thiệu/SEO phía dưới danh sách sản phẩm.

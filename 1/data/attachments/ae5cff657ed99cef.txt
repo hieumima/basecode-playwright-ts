@@ -1,0 +1,1 @@
+Giao diện Web thiếu nhiều khối nội dung (section) quan trọng so với bản thiết kế Figma gồm 'Dịch vụ nổi bật', 'Dự án nổi bật' và 'Thương hiệu đồng hành', dẫn đến cấu trúc trang web không đầy đủ và không bám sát thiết kế chuẩn.

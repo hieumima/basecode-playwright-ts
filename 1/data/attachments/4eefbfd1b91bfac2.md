@@ -1,0 +1,412 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: ui/uiDesktopVisual.spec.ts >> Desktop UI Visual Tests >> [Sản phẩm] [Toàn bộ trang] So sánh Figma ↔ Web
+- Location: tests/ui/uiDesktopVisual.spec.ts:28:17
+
+# Error details
+
+```
+Error: AI báo lỗi: Giao diện Web thực tế bị thiếu nhiều khối nội dung (section) quan trọng so với bản thiết kế Figma, bao gồm danh mục sản phẩm con phía trên, tiêu đề trang, nút 'Xem thêm' và khối văn bản giới thiệu/SEO phía dưới danh sách sản phẩm.
+Đã đính kèm 2 ảnh chi tiết lỗi vào báo cáo.
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - link "Điện máy Trần Quang" [ref=e7] [cursor=pointer]:
+        - /url: https://code4.mimadigi.vn/2026/july/tranquang_108426W/
+        - img "Điện máy Trần Quang" [ref=e8]
+      - generic [ref=e9]:
+        - paragraph [ref=e10]: Công ty SX-TM-DV-KỸ THUẬT
+        - paragraph [ref=e11]: ÂM THANH - ÁNH SÁNG
+    - generic [ref=e13]:
+      - button "Tìm kiếm" [ref=e14] [cursor=pointer]:
+        - img [ref=e15]
+      - textbox "Tìm theo tên sản phẩm" [ref=e16]
+    - generic [ref=e18]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: Hotline 1
+        - link "0936106552" [ref=e23] [cursor=pointer]:
+          - /url: tel:0936106552
+      - generic [ref=e26]:
+        - generic [ref=e27]: Hotline 2
+        - link "0936106552" [ref=e28] [cursor=pointer]:
+          - /url: tel:0936106552
+  - generic [ref=e33]:
+    - link "Danh Mục sản phẩm" [ref=e35] [cursor=pointer]:
+      - /url: javascript:;
+      - img [ref=e36]
+      - generic [ref=e41]: Danh Mục sản phẩm
+    - list [ref=e42]:
+      - listitem [ref=e43]:
+        - link "Trang chủ" [ref=e44] [cursor=pointer]:
+          - /url: ""
+      - listitem [ref=e45]:
+        - link "Giới thiệu" [ref=e46] [cursor=pointer]:
+          - /url: gioi-thieu
+      - listitem [ref=e47]:
+        - link "Dịch vụ" [ref=e48] [cursor=pointer]:
+          - /url: dich-vu
+          - text: Dịch vụ
+      - listitem [ref=e50]:
+        - link "Dự án" [ref=e51] [cursor=pointer]:
+          - /url: du-an
+      - listitem [ref=e52]:
+        - link "Tài liệu kỹ thuật" [ref=e53] [cursor=pointer]:
+          - /url: tai-lieu-ky-thuat
+      - listitem [ref=e54]:
+        - link "Tin tức & Sự kiện" [ref=e55] [cursor=pointer]:
+          - /url: tin-tuc-va-su-kien
+      - listitem [ref=e56]:
+        - link "Liên hệ" [ref=e57] [cursor=pointer]:
+          - /url: lien-he
+  - list [ref=e60]:
+    - listitem [ref=e61]:
+      - link "Trang chủ" [ref=e62] [cursor=pointer]:
+        - /url: https://code4.mimadigi.vn/2026/july/tranquang_108426W/
+    - listitem [ref=e63]:
+      - text: ">"
+      - link "Sản phẩm" [ref=e64] [cursor=pointer]:
+        - /url: https://code4.mimadigi.vn/2026/july/tranquang_108426W/san-pham
+  - generic [ref=e70]:
+    - generic [ref=e72]:
+      - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1) (1)" [ref=e74] [cursor=pointer]:
+        - /url: auto-test-san-pham-loadtest-1786058954215-1-1-1
+        - img "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1) (1)" [ref=e75]
+      - generic [ref=e76]:
+        - heading "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1) (1)" [level=3] [ref=e77]:
+          - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1) (1)" [ref=e78] [cursor=pointer]:
+            - /url: auto-test-san-pham-loadtest-1786058954215-1-1-1
+        - paragraph [ref=e79]:
+          - generic [ref=e80]: 90.000đ
+          - generic [ref=e81]: "-10%"
+          - generic [ref=e82]: 100.000đ
+    - generic [ref=e84]:
+      - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1)" [ref=e86] [cursor=pointer]:
+        - /url: auto-test-san-pham-loadtest-1786058954215-1-1
+        - img "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1)" [ref=e87]
+      - generic [ref=e88]:
+        - heading "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1)" [level=3] [ref=e89]:
+          - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1) (1)" [ref=e90] [cursor=pointer]:
+            - /url: auto-test-san-pham-loadtest-1786058954215-1-1
+        - paragraph [ref=e91]:
+          - generic [ref=e92]: 90.000đ
+          - generic [ref=e93]: "-10%"
+          - generic [ref=e94]: 100.000đ
+    - generic [ref=e96]:
+      - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1)" [ref=e98] [cursor=pointer]:
+        - /url: auto-test-san-pham-loadtest-1786058954215-1
+        - img "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1)" [ref=e99]
+      - generic [ref=e100]:
+        - heading "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1)" [level=3] [ref=e101]:
+          - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215 (1)" [ref=e102] [cursor=pointer]:
+            - /url: auto-test-san-pham-loadtest-1786058954215-1
+        - paragraph [ref=e103]:
+          - generic [ref=e104]: 90.000đ
+          - generic [ref=e105]: "-10%"
+          - generic [ref=e106]: 100.000đ
+    - generic [ref=e108]:
+      - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215" [ref=e110] [cursor=pointer]:
+        - /url: san-pham-loadtest-1786058954215
+        - img "[AUTO-TEST] Sản phẩm LoadTest 1786058954215" [ref=e111]
+      - generic [ref=e112]:
+        - heading "[AUTO-TEST] Sản phẩm LoadTest 1786058954215" [level=3] [ref=e113]:
+          - link "[AUTO-TEST] Sản phẩm LoadTest 1786058954215" [ref=e114] [cursor=pointer]:
+            - /url: san-pham-loadtest-1786058954215
+        - paragraph [ref=e115]:
+          - generic [ref=e116]: 90.000đ
+          - generic [ref=e117]: "-10%"
+          - generic [ref=e118]: 100.000đ
+    - generic [ref=e120]:
+      - link "Loa BMB CSE-312-SE (Cặp)" [ref=e122] [cursor=pointer]:
+        - /url: loa-bmb-cse-312-se-cap
+        - img "Loa BMB CSE-312-SE (Cặp)" [ref=e123]
+      - generic [ref=e124]:
+        - heading "Loa BMB CSE-312-SE (Cặp)" [level=3] [ref=e125]:
+          - link "Loa BMB CSE-312-SE (Cặp)" [ref=e126] [cursor=pointer]:
+            - /url: loa-bmb-cse-312-se-cap
+        - paragraph [ref=e127]:
+          - generic [ref=e128]: Liên hệ báo giá
+    - generic [ref=e130]:
+      - link "Loa BMB CSE-310-SE (Cặp)" [ref=e132] [cursor=pointer]:
+        - /url: loa-bmb-cse-310-se-cap
+        - img "Loa BMB CSE-310-SE (Cặp)" [ref=e133]
+      - generic [ref=e134]:
+        - heading "Loa BMB CSE-310-SE (Cặp)" [level=3] [ref=e135]:
+          - link "Loa BMB CSE-310-SE (Cặp)" [ref=e136] [cursor=pointer]:
+            - /url: loa-bmb-cse-310-se-cap
+        - paragraph [ref=e137]:
+          - generic [ref=e138]: Liên hệ báo giá
+    - generic [ref=e140]:
+      - link "Loa BMB CSE-310-II-SE (Cặp)" [ref=e142] [cursor=pointer]:
+        - /url: loa-bmb-cse-310-ii-se-cap
+        - img "Loa BMB CSE-310-II-SE (Cặp)" [ref=e143]
+      - generic [ref=e144]:
+        - heading "Loa BMB CSE-310-II-SE (Cặp)" [level=3] [ref=e145]:
+          - link "Loa BMB CSE-310-II-SE (Cặp)" [ref=e146] [cursor=pointer]:
+            - /url: loa-bmb-cse-310-ii-se-cap
+        - paragraph [ref=e147]:
+          - generic [ref=e148]: Liên hệ báo giá
+    - generic [ref=e150]:
+      - link "Loa BMB CSE-308-SE (Cặp)" [ref=e152] [cursor=pointer]:
+        - /url: loa-bmb-cse-308-se-cap
+        - img "Loa BMB CSE-308-SE (Cặp)" [ref=e153]
+      - generic [ref=e154]:
+        - heading "Loa BMB CSE-308-SE (Cặp)" [level=3] [ref=e155]:
+          - link "Loa BMB CSE-308-SE (Cặp)" [ref=e156] [cursor=pointer]:
+            - /url: loa-bmb-cse-308-se-cap
+        - paragraph [ref=e157]:
+          - generic [ref=e158]: Liên hệ báo giá
+    - generic [ref=e160]:
+      - link "Loa BMB CSD-2000-SE (Cặp)" [ref=e162] [cursor=pointer]:
+        - /url: loa-bmb-csd-2000-se-cap
+        - img "Loa BMB CSD-2000-SE (Cặp)" [ref=e163]
+      - generic [ref=e164]:
+        - heading "Loa BMB CSD-2000-SE (Cặp)" [level=3] [ref=e165]:
+          - link "Loa BMB CSD-2000-SE (Cặp)" [ref=e166] [cursor=pointer]:
+            - /url: loa-bmb-csd-2000-se-cap
+        - paragraph [ref=e167]:
+          - generic [ref=e168]: Liên hệ báo giá
+    - generic [ref=e170]:
+      - link "Loa BMB CSD-880-SE (Cặp)" [ref=e172] [cursor=pointer]:
+        - /url: loa-bmb-csd-880-se-cap
+        - img "Loa BMB CSD-880-SE (Cặp)" [ref=e173]
+      - generic [ref=e174]:
+        - heading "Loa BMB CSD-880-SE (Cặp)" [level=3] [ref=e175]:
+          - link "Loa BMB CSD-880-SE (Cặp)" [ref=e176] [cursor=pointer]:
+            - /url: loa-bmb-csd-880-se-cap
+        - paragraph [ref=e177]:
+          - generic [ref=e178]: Liên hệ báo giá
+  - generic [ref=e179]:
+    - generic [ref=e182]:
+      - generic [ref=e183]:
+        - link "Điện máy Trần Quang" [ref=e184] [cursor=pointer]:
+          - /url: https://code4.mimadigi.vn/2026/july/tranquang_108426W/
+          - img "Điện máy Trần Quang" [ref=e185]
+        - generic [ref=e186]:
+          - paragraph [ref=e187]:
+            - generic [ref=e189]: ÂM THANH CAMAX – CHẤT ÂM HOÀN HẢO KHẲNG ĐỊNH ĐẲNG CẤP
+          - paragraph [ref=e190]: Chuyên cung cấp và phân phối các thiết bị âm thanh chính hãng cho phòng phim, karaoke gia đình và dự án hội trường chuyên nghiệp. Camax cam kết mang lại giải pháp âm thanh toàn diện, đỉnh cao cùng chính sách bảo hành dài hạn vượt trội.
+        - paragraph [ref=e191]: Theo dõi chúng tôi tại
+        - generic [ref=e192]:
+          - link "Facebook" [ref=e193] [cursor=pointer]:
+            - /url: ""
+            - img "Facebook" [ref=e194]
+          - link "Instargam" [ref=e195] [cursor=pointer]:
+            - /url: ""
+            - img "Instargam" [ref=e196]
+          - link "Tiktok" [ref=e197] [cursor=pointer]:
+            - /url: ""
+            - img "Tiktok" [ref=e198]
+      - generic [ref=e199]:
+        - paragraph [ref=e200]: Thông tin công ty
+        - paragraph [ref=e202]:
+          - strong [ref=e203]:
+            - generic [ref=e204]: CÔNG TY SX-TM-DV-KỸ THUẬT ÂM THANH - ÁNH SÁNG TRẦN QUANG
+          - generic [ref=e205]:
+            - text: "MST: 0319306507"
+            - text: "Địa chỉ: 416 Võ Văn Vân, Xã Tân Vĩnh Lộc, Thành phố Hồ Chí Minh, Việt Nam"
+            - text: "Email:"
+            - link "amthanhtranquang@gmail.com" [ref=e206] [cursor=pointer]:
+              - /url: mailto:amthanhtranquang@gmail.com
+            - text: "Số TK: 319306507 ( MB bank ) – CN Vĩnh Lộc, TP HCM"
+            - text: "Số ĐT: 0962 719 686"
+            - text: "Người đại diện: TRẦN THANH QUANG"
+      - generic [ref=e207]:
+        - paragraph [ref=e208]: Về chúng tôi
+        - list [ref=e209]:
+          - listitem [ref=e210]:
+            - link "Giới thiệu" [ref=e211] [cursor=pointer]:
+              - /url: gioi-thieu
+          - listitem [ref=e212]:
+            - link "Sản phẩm" [ref=e213] [cursor=pointer]:
+              - /url: san-pham
+          - listitem [ref=e214]:
+            - link "Dịch vụ" [ref=e215] [cursor=pointer]:
+              - /url: dich-vu
+          - listitem [ref=e216]:
+            - link "Dự án" [ref=e217] [cursor=pointer]:
+              - /url: du-an
+          - listitem [ref=e218]:
+            - link "Tài liệu kỹ thuật" [ref=e219] [cursor=pointer]:
+              - /url: tai-lieu-ky-thuat
+          - listitem [ref=e220]:
+            - link "Tin tức & sự kiện" [ref=e221] [cursor=pointer]:
+              - /url: tin-tuc-va-su-kien
+          - listitem [ref=e222]:
+            - link "Liên hệ" [ref=e223] [cursor=pointer]:
+              - /url: lien-he
+      - generic [ref=e224]:
+        - paragraph [ref=e225]: Chính sách
+        - list [ref=e226]:
+          - listitem [ref=e227]:
+            - link "Hướng dẫn sử dụng" [ref=e228] [cursor=pointer]:
+              - /url: huong-dan-su-dung
+          - listitem [ref=e229]:
+            - link "Chính sách vận chuyển" [ref=e230] [cursor=pointer]:
+              - /url: chinh-sach-van-chuyen
+          - listitem [ref=e231]:
+            - link "Chính sách đổi trả" [ref=e232] [cursor=pointer]:
+              - /url: chinh-sach-doi-tra
+          - listitem [ref=e233]:
+            - link "Chính sách thanh toán" [ref=e234] [cursor=pointer]:
+              - /url: chinh-sach-thanh-toan
+          - listitem [ref=e235]:
+            - link "Chính sách hậu mãi" [ref=e236] [cursor=pointer]:
+              - /url: chinh-sach-hau-mai
+          - listitem [ref=e237]:
+            - link "Chính sách bảo mật" [ref=e238] [cursor=pointer]:
+              - /url: chinh-sach-bao-mat
+          - listitem [ref=e239]:
+            - link "Chính sách bảo hành" [ref=e240] [cursor=pointer]:
+              - /url: chinh-sach-bao-hanh
+    - generic [ref=e243]: "Công ty TNHH SX-TM-DV-KỸ THUẬT ÂM THANH ÁNH SÁNG TRẦN QUAN - Giấy phép ĐKKD/Mã số thuế: 0319306507"
+    - generic [ref=e246]:
+      - generic [ref=e247]: Copyright ©2026 ĐIỆN MÁY TRẦN QUANG. Thiết kế Web MIMA
+      - generic [ref=e248]:
+        - generic [ref=e249]:
+          - text: "Đang online:"
+          - generic [ref=e250]: "134"
+        - generic [ref=e251]: "|"
+        - generic [ref=e252]:
+          - text: "Hôm nay:"
+          - generic [ref=e253]: "5"
+        - generic [ref=e254]: "|"
+        - generic [ref=e255]:
+          - text: "Tổng truy cập:"
+          - generic [ref=e256]: "473"
+  - generic [ref=e257]:
+    - 'link "Call me: 0936106552" [ref=e258] [cursor=pointer]':
+      - /url: tel:0936106552
+      - img [ref=e262]
+      - generic [ref=e265]: "Call me: 0936106552"
+    - 'link "Zalo: 0936106552" [ref=e266] [cursor=pointer]':
+      - /url: https://zalo.me/0936106552
+      - img [ref=e270]
+      - generic [ref=e271]: "Zalo: 0936106552"
+```
+
+# Test source
+
+```ts
+  4   | import * as fs from 'fs';
+  5   | import { UiPage } from '../pages/ui/UiPage';
+  6   | import { FigmaService } from '../services/FigmaService';
+  7   | import { VisualAnnotator } from '../services/VisualAnnotator';
+  8   | import { GeminiVision } from '../services/GeminiVision';
+  9   | import { UiSectionTestData } from '../../data/ui/uiTypes';
+  10  | 
+  11  | export class UiVisualHelper {
+  12  |     private static figmaService = new FigmaService();
+  13  | 
+  14  |     static async runVisualComparison(
+  15  |         page: Page,
+  16  |         uiPage: UiPage,
+  17  |         data: UiSectionTestData,
+  18  |         testInfo: TestInfo
+  19  |     ) {
+  20  |         const FILE_KEY = process.env.UI_TEST_FIGMA_FILE_KEY || '';
+  21  |         const BASE_URL = (process.env.BASE_URL || '').replace(/\/$/, '');
+  22  | 
+  23  |         // ── Kiểm tra cấu hình ──
+  24  |         if (!FILE_KEY || !BASE_URL) {
+  25  |             test.skip(!FILE_KEY, 'Thiếu UI_TEST_FIGMA_FILE_KEY trong .env');
+  26  |             test.skip(!BASE_URL, 'Thiếu BASE_URL trong .env');
+  27  |             return;
+  28  |         }
+  29  | 
+  30  |         // ── Skip nếu không match được Figma frame ──
+  31  |         if (!data.figmaNodeId) {
+  32  |             test.skip(true, `Không tìm được Figma frame cho "${data.sectionName}" (matchScore: ${data.matchScore}). Hãy thêm vào uiManualConfig.ts`);
+  33  |             return;
+  34  |         }
+  35  | 
+  36  |         const fullUrl = `${BASE_URL}${data.path}`;
+  37  | 
+  38  |         // Thư mục lưu ảnh diff cho test này
+  39  |         const diffDir = path.join(testInfo.outputDir, 'visual-diff');
+  40  | 
+  41  |         // ── Step 1: Tải ảnh Figma và Xử lý ──
+  42  |         const safeNodeId = data.figmaNodeId!.replace(/[^a-z0-9]/gi, '_');
+  43  |         const downloadedFigmaImagePath = path.join(testInfo.project.outputDir, `${safeNodeId}_figma.png`);
+  44  |         const finalFigmaImagePath = path.join(diffDir, `${data.sectionName.replace(/[^a-z0-9]/gi, '_')}_figma_expected.png`);
+  45  | 
+  46  |         await test.step('1. Tải ảnh thiết kế từ Figma', async () => {
+  47  |             // Tải từ Figma (có cơ chế cache và mutex trong FigmaService)
+  48  |             await this.figmaService.downloadSnapshot(FILE_KEY, data.figmaNodeId!, downloadedFigmaImagePath);
+  49  | 
+  50  |             if (!fs.existsSync(diffDir)) fs.mkdirSync(diffDir, { recursive: true });
+  51  | 
+  52  |             fs.copyFileSync(downloadedFigmaImagePath, finalFigmaImagePath);
+  53  | 
+  54  |             await allure.attachment('Figma Expected', fs.readFileSync(finalFigmaImagePath), 'image/png');
+  55  |         });
+  56  | 
+  57  |         // ── Step 2: Chụp ảnh web ──
+  58  |         const actualImagePath = path.join(diffDir, `${data.sectionName.replace(/[^a-z0-9]/gi, '_')}_actual.png`);
+  59  |         await test.step(`2. Chụp ảnh section "${data.sectionName}" trên web`, async () => {
+  60  |             const locator = await uiPage.gotoSection(fullUrl, data.selector);
+  61  |             await uiPage.hideDynamicElements();
+  62  |             await uiPage.prepareForScreenshot();
+  63  | 
+  64  |             const isVisible = await locator.isVisible({ timeout: 10000 }).catch(() => false);
+  65  |             if (!isVisible) {
+  66  |                 throw new Error(`Không tìm thấy element "${data.selector}" trên trang ${fullUrl}`);
+  67  |             }
+  68  | 
+  69  |             await page.screenshot({
+  70  |                 path: actualImagePath,
+  71  |                 fullPage: true,
+  72  |                 animations: 'disabled'
+  73  |             });
+  74  |             await allure.attachment('Web Actual', fs.readFileSync(actualImagePath), 'image/png');
+  75  |         });
+  76  | 
+  77  |         // ── Step 3: So sánh + Annotate ──
+  78  |         let aiResult: { pass: boolean, reason: string, issues?: Array<{ description: string, web_box_2d: [number, number, number, number], figma_box_2d: [number, number, number, number] }> };
+  79  |         await test.step('3. Phân tích ngữ cảnh với Gemini AI', async () => {
+  80  |             const gemini = new GeminiVision();
+  81  |             aiResult = await gemini.compareImages(finalFigmaImagePath, actualImagePath);
+  82  |             await allure.parameter('AI Pass', String(aiResult.pass));
+  83  |             await allure.attachment('AI Reason', Buffer.from(aiResult.reason, 'utf-8'), 'text/plain');
+  84  | 
+  85  |             if (!aiResult.pass && aiResult.issues && aiResult.issues.length > 0) {
+  86  |                 const snippetResults = await VisualAnnotator.annotateAiDifferences(
+  87  |                     finalFigmaImagePath,
+  88  |                     actualImagePath,
+  89  |                     diffDir,
+  90  |                     data.sectionName,
+  91  |                     aiResult.issues
+  92  |                 );
+  93  | 
+  94  |                 let idx = 1;
+  95  |                 for (const snippet of snippetResults) {
+  96  |                     await allure.attachment(`Lỗi ${idx}: ${snippet.description.substring(0, 30)}...`, fs.readFileSync(snippet.outputPath), 'image/png');
+  97  |                     idx++;
+  98  |                 }
+  99  |                 aiResult.reason += `\nĐã đính kèm ${snippetResults.length} ảnh chi tiết lỗi vào báo cáo.`;
+  100 |             }
+  101 |         });
+  102 | 
+  103 |         await test.step('4. Kiểm tra kết quả AI', async () => {
+> 104 |             expect(aiResult!.pass, `AI báo lỗi: ${aiResult!.reason}`).toBe(true);
+      |                                                                       ^ Error: AI báo lỗi: Giao diện Web thực tế bị thiếu nhiều khối nội dung (section) quan trọng so với bản thiết kế Figma, bao gồm danh mục sản phẩm con phía trên, tiêu đề trang, nút 'Xem thêm' và khối văn bản giới thiệu/SEO phía dưới danh sách sản phẩm.
+  105 |         });
+  106 |     }
+  107 | }
+  108 | 
+```

@@ -1,0 +1,1 @@
+Giao diện Web thực tế bị thiếu mất hoàn toàn khối bảng thông tin 'Thông số kỹ thuật' ở bên phải phần 'Chi tiết sản phẩm' so với bản thiết kế Figma, khiến phần nội dung chi tiết sản phẩm bị tràn rộng ra và không nhất quán với layout chuẩn.

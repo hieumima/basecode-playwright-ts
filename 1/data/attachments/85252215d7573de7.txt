@@ -1,0 +1,1 @@
+Giao diện Web thực tế thiếu hẳn 2 khối nội dung quan trọng so với bản thiết kế Figma: khối 'Lịch sử hình thành' (Timeline) và khối 'Thương hiệu đồng hành' (Logo đối tác).
