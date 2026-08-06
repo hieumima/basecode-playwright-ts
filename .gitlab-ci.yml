@@ -1,0 +1,227 @@
+variables:
+  ENV:
+    value: "staging"
+    options:
+      - "dev"
+      - "qa"
+      - "staging"
+    description: "Target environment (dev, qa, staging)"
+  TEST_TYPE:
+    value: "@smoke"
+    options:
+      - "@smoke"
+      - "@regression"
+      - "@e2e"
+      - "@seo"
+      - "@performance"
+    description: "Test suite filter (@smoke, @regression, @e2e, @seo, @performance)"
+
+stages:
+  - test
+  - report
+  - deploy
+  - notify
+
+# Helper script for outputting styled console messages
+.log_helpers: &log_helpers |
+  export COLOR_RESET="\e[0m"
+  export COLOR_INFO="\e[36m"
+  export COLOR_SUCCESS="\e[32m"
+  export COLOR_WARNING="\e[33m"
+  export COLOR_ERROR="\e[31m"
+  log_info() { echo -e "${COLOR_INFO}[INFO] $1${COLOR_RESET}"; }
+  log_success() { echo -e "${COLOR_SUCCESS}[SUCCESS] $1${COLOR_RESET}"; }
+  log_warning() { echo -e "${COLOR_WARNING}[WARNING] $1${COLOR_RESET}"; }
+  log_error() { echo -e "${COLOR_ERROR}[ERROR] $1${COLOR_RESET}"; }
+
+# Test execution job template
+execute-tests:
+  stage: test
+  environment:
+    name: $ENV
+  image: node:20
+  timeout: 1h
+  parallel: 5 
+
+  # Tạo bộ nhớ đệm cho NPM để không phải tải lại toàn bộ thư viện mỗi lần chạy
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "trigger" || $CI_PIPELINE_SOURCE == "pipeline"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+
+  before_script:
+    - *log_helpers
+    - log_info "Installing system dependencies and packages..."
+    # Lệnh cài thư viện tận dụng cache
+    - npm ci --cache .npm --prefer-offline
+    # Cài đặt Chrome và Webkit kèm theo các thư viện OS lõi (--with-deps) để đảm bảo không lỗi
+    - npx playwright install --with-deps chrome webkit
+
+  script:
+    - *log_helpers
+    # - log_info "Generating SEO test data..."
+    # - npm run generate-seo
+    - log_info "Generating UI test data from Figma..."
+    - npm run generate-ui
+    - |
+      if [ "$CI_PIPELINE_SOURCE" == "merge_request_event" ]; then
+        log_warning "🔥 Executing Smoke Tests for Merge Request..."
+        npx playwright test --grep "@smoke" --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL
+        
+      elif [ "$CI_PIPELINE_SOURCE" == "web" ]; then
+        log_info "👨‍💻 Executing manual suite '$TEST_TYPE' on environment '$ENV'..."
+        npx playwright test --grep "$TEST_TYPE" --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL
+        
+      elif [ "$CI_PIPELINE_SOURCE" == "trigger" ] || [ "$CI_PIPELINE_SOURCE" == "pipeline" ]; then
+        log_success "🚀 Deploy trigger received. Running suite '$TEST_TYPE' on environment '$ENV'..."
+        npx playwright test --grep "$TEST_TYPE" --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL
+        
+      elif [ "$CI_PIPELINE_SOURCE" == "push" ]; then
+        log_info "📦 Executing Push Event. Running Regression suite..."
+        npx playwright test --grep "@regression" --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL
+        
+
+      else
+        log_info "🕒 Executing scheduled nightly Regression suite..."
+        npx playwright test --grep "@regression" --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL
+      fi
+  after_script:
+    - mkdir -p allure-results
+    - |
+      if [ -f "config/.env.$ENV" ]; then
+        set -a
+        . "config/.env.$ENV"
+        set +a
+      fi
+      cat <<EOF > allure-results/environment.properties
+      BaseURL=$BASE_URL
+      Environment=$ENV
+      Browser=Chrome
+      Project=$CI_PROJECT_NAME
+      PipelineID=$CI_PIPELINE_ID
+      EOF
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+    reports:
+      junit: allure-results/results.xml
+    expire_in: 1 day
+
+# Compilation and publication of Allure report to GitLab Pages
+pages:
+  stage: report
+  image: node:20
+  dependencies:
+    - execute-tests
+  rules:
+    - if: '$CI_PIPELINE_SOURCE != "merge_request_event"'
+      when: always
+
+  # Cấu hình lại thư mục cache hoàn toàn độc lập để Trend không bao giờ bị mất
+  cache:
+    key: allure-history-cache-store
+    paths:
+      - allure-history-cache/
+
+  # Bổ sung environment để GitLab sinh ra nút "Open Allure Report"
+  environment:
+    name: Allure Report
+    url: $CI_PAGES_URL
+
+  before_script:
+    - *log_helpers
+    - log_info "Updating system packages and installing Java JRE..."
+    - apt-get update && apt-get install -y default-jre
+    - log_info "Installing Allure CLI..."
+    - npm install -g allure-commandline
+
+  script:
+    - *log_helpers
+    - log_info "Restoring previous Allure history..."
+    - mkdir -p allure-results/history
+
+    # Lấy lịch sử Trend từ thư mục cache ảo đưa vào kết quả hiện tại
+    - |
+      if [ -d "allure-history-cache" ]; then
+        log_info "Found cached history. Merging with current execution results..."
+        cp -r allure-history-cache/* allure-results/history/
+      fi
+
+    - log_info "Generating static Allure Dashboard..."
+    - allure generate allure-results --clean -o public
+
+    # Sao lưu lại lịch sử Trend mới vào thư mục cache ảo để dành cho lần chạy sau
+    - mkdir -p allure-history-cache
+    - cp -r public/history/* allure-history-cache/
+    - log_success "Successfully recorded Allure history trends for subsequent builds."
+
+    # --- IN LINK RA MÀN HÌNH ĐỂ KHÁCH HÀNG DỄ DÀNG CLICK TỚI BÁO CÁO ---
+    - |
+      echo -e "\n====================================================================="
+      echo -e "📊 KẾT QUẢ KIỂM THỬ TỰ ĐỘNG ĐÃ SẴN SÀNG!"
+      echo -e "====================================================================="
+      echo -e "👉 CLICK VÀO ĐƯỜNG LINK DƯỚI ĐÂY ĐỂ XEM BÁO CÁO ALLURE DASHBOARD:"
+      echo -e "\e[1;34m$CI_PAGES_URL\e[0m"
+      echo -e "---------------------------------------------------------------------"
+      echo -e "💡 Lưu ý: Bạn cũng có thể bấm vào nút 'View App' hoặc 'Open Allure Report'"
+      echo -e "nằm ở góc phải màn hình của Job này để mở báo cáo."
+      echo -e "=====================================================================\n"
+
+  artifacts:
+    paths:
+      - public
+    expire_in: 20 days
+
+send-email:
+  stage: notify
+  image: debian:stable-slim
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+  before_script:
+    - apt-get update && apt-get install -y swaks libnet-ssleay-perl
+  script:
+    - |
+      MSG="Kính gửi Quý anh/chị,
+
+      Bộ phận Kiểm thử (QA) xin trân trọng thông báo: Hệ thống kiểm thử tự động (Playwright) trên môi trường $ENV đã được thực hiện và hoàn tất thành công.
+
+      THÔNG TIN TỔNG QUAN:
+      - Đơn vị/Dự án: Công ty MIMA
+      - Môi trường kiểm thử: $ENV
+      - Trạng thái tiến trình: Hoàn tất
+
+      BÁO CÁO CHI TIẾT:
+      Kính mời anh/chị truy cập vào đường dẫn dưới đây để xem báo cáo kết quả kiểm thử trực quan trên Allure Dashboard (bao gồm tỷ lệ Pass/Fail và thống kê chi tiết):
+      $CI_PAGES_URL
+
+      Nếu anh/chị cần thêm thông tin hoặc có bất kỳ thắc mắc nào, xin vui lòng phản hồi lại email này.
+
+      Kính chúc Quý anh/chị một ngày làm việc hiệu quả!
+
+      Trân trọng,
+      QA Automation Team - MIMA"
+      
+      swaks --to tranxuanhieu899@gmail.com \
+            --from "$EMAIL_USERNAME" \
+            --header "From: MIMA QA Automation <$EMAIL_USERNAME>" \
+            --header "Reply-To: $EMAIL_USERNAME" \
+            --header "MIME-Version: 1.0" \
+            --header "Content-Type: text/plain; charset=UTF-8" \
+            --server smtp.gmail.com:587 \
+            --tls \
+            --auth LOGIN \
+            --auth-user "$EMAIL_USERNAME" \
+            --auth-password "$EMAIL_PASSWORD" \
+            --header "Subject: [MIMA] Báo cáo kết quả kiểm thử tự động - Môi trường $ENV" \
+            --body "$MSG"

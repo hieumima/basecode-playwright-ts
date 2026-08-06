@@ -1,0 +1,253 @@
+name: Playwright Tests Automation
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # Chạy nightly lúc 0h (Giờ UTC)
+    - cron: '0 0 * * *'
+  
+  workflow_dispatch:
+    inputs:
+      ENV:
+        description: 'Target environment (dev, qa, staging)'
+        required: true
+        default: 'staging'
+        type: choice
+        options: [dev, qa, staging]
+      TEST_TYPE:
+        description: 'Test suite filter'
+        required: true
+        default: '@smoke'
+        type: choice
+        options:
+          - '@smoke'
+          - '@regression'
+          - '@e2e'
+          - '@seo'
+          - '@performance'
+          - '@bulk'
+          
+  repository_dispatch:
+    types: [run-tests]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+env:
+  # Ưu tiên lấy biến từ lệnh gọi API (repository_dispatch) hoặc giao diện (workflow_dispatch)
+  TARGET_ENV: ${{ github.event.client_payload.ENV || github.event.inputs.ENV || 'staging' }}
+  TARGET_TEST_TYPE: ${{ github.event.client_payload.TEST_TYPE || github.event.inputs.TEST_TYPE || '@smoke' }}
+  ENV: ${{ github.event.client_payload.ENV || github.event.inputs.ENV || 'staging' }}
+
+jobs:
+  execute-tests:
+    name: Execute Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: ${{ github.event.client_payload.ENV || github.event.inputs.ENV || 'staging' }}
+    
+    # Tương đương 'parallel: 5' trên GitLab
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4, 5]
+        shardTotal: [5]
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          echo -e "\e[36m[INFO] Installing system dependencies and packages...\e[0m"
+          npm ci --prefer-offline
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chrome webkit
+
+      - name: Generate UI test data from Figma
+        env:
+          UI_TEST_FIGMA_TOKEN: ${{ secrets.UI_TEST_FIGMA_TOKEN }}
+          UI_TEST_FIGMA_FILE_KEY: ${{ secrets.UI_TEST_FIGMA_FILE_KEY }}
+        run: |
+          echo -e "\e[36m[INFO] Generating UI test data from Figma...\e[0m"
+          npm run generate-ui
+          
+      - name: Run Tests
+        id: run-tests
+        env:
+          UI_TEST_FIGMA_TOKEN: ${{ secrets.UI_TEST_FIGMA_TOKEN }}
+          UI_TEST_FIGMA_FILE_KEY: ${{ secrets.UI_TEST_FIGMA_FILE_KEY }}
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          # Helper script for outputting styled console messages
+          export COLOR_RESET="\e[0m"
+          export COLOR_INFO="\e[36m"
+          export COLOR_SUCCESS="\e[32m"
+          export COLOR_WARNING="\e[33m"
+          
+          SHARD="${{ matrix.shardIndex }}/${{ matrix.shardTotal }}"
+          EVENT_NAME="${{ github.event_name }}"
+          
+          if [ "$EVENT_NAME" == "pull_request" ]; then
+            echo -e "${COLOR_WARNING}🔥 Executing Smoke Tests for Pull Request...${COLOR_RESET}"
+            npx playwright test --grep "@smoke" --shard=$SHARD
+            
+          elif [ "$EVENT_NAME" == "workflow_dispatch" ]; then
+            echo -e "${COLOR_INFO}👨‍💻 Executing manual suite '${{ env.TARGET_TEST_TYPE }}' on environment '${{ env.TARGET_ENV }}'...${COLOR_RESET}"
+            npx playwright test --grep "${{ env.TARGET_TEST_TYPE }}" --shard=$SHARD
+            
+          elif [ "$EVENT_NAME" == "repository_dispatch" ]; then
+            echo -e "${COLOR_SUCCESS}🚀 Deploy trigger received. Running suite '${{ env.TARGET_TEST_TYPE }}' on environment '${{ env.TARGET_ENV }}'...${COLOR_RESET}"
+            npx playwright test --grep "${{ env.TARGET_TEST_TYPE }}" --shard=$SHARD
+            
+          elif [ "$EVENT_NAME" == "push" ]; then
+            echo -e "${COLOR_INFO}📦 Executing Push Event. Running Regression suite (excluding bulk)...${COLOR_RESET}"
+            npx playwright test --grep "@regression" --grep-invert "@bulk" --shard=$SHARD
+            
+          elif [ "$EVENT_NAME" == "schedule" ]; then
+            echo -e "${COLOR_INFO}🕒 Executing scheduled nightly Regression suite (excluding bulk)...${COLOR_RESET}"
+            npx playwright test --grep "@regression" --grep-invert "@bulk" --shard=$SHARD
+          fi
+
+      - name: Prepare environment properties for Allure
+        if: always()
+        run: |
+          mkdir -p allure-results
+          
+          # Đọc file .env giống hệt logic trên GitLab
+          if [ -f "config/.env.${{ env.TARGET_ENV }}" ]; then
+            set -a
+            . "config/.env.${{ env.TARGET_ENV }}"
+            set +a
+          fi
+          
+          cat <<EOF > allure-results/environment.properties
+          BaseURL=$BASE_URL
+          Environment=${{ env.TARGET_ENV }}
+          Browser=Chrome
+          Project=${{ github.event.repository.name }}
+          PipelineID=${{ github.run_id }}
+          EOF
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ matrix.shardIndex }}
+          path: allure-results/
+          retention-days: 1
+
+  report:
+    name: Generate Allure Report
+    runs-on: ubuntu-latest
+    needs: execute-tests
+    if: always() && github.event_name != 'pull_request'
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure gh-pages branch exists
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git ls-remote --heads origin gh-pages | grep -q gh-pages; then
+            echo "Branch gh-pages does not exist. Creating it..."
+            git checkout --orphan gh-pages
+            git reset --hard
+            git commit --allow-empty -m "Initialize gh-pages branch"
+            git push origin gh-pages
+            git checkout -f ${{ github.sha }} 
+          else
+            echo "Branch gh-pages already exists."
+          fi
+
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: target/allure-results
+          pattern: allure-results-*
+          merge-multiple: true
+
+      - name: Get Allure history from gh-pages
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-dir
+          fetch-depth: 0
+
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: target/allure-results
+          allure_history: allure-history
+          gh_pages: gh-pages-dir
+          keep_reports: 10
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+
+      - name: Print Output Information
+        run: |
+          echo "## 📊 KẾT QUẢ KIỂM THỬ TỰ ĐỘNG ĐÃ SẴN SÀNG!" >> $GITHUB_STEP_SUMMARY
+          echo "| Hạng mục | Thông tin |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Môi trường** | \`${{ env.TARGET_ENV }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Báo cáo Allure** | 👉 **[XEM ALLURE DASHBOARD TẠI ĐÂY](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ github.run_number }}/)** |" >> $GITHUB_STEP_SUMMARY
+
+  notify:
+    name: Send Email Notification
+    runs-on: ubuntu-latest
+    needs: report
+    if: github.event_name == 'schedule' && success()
+    steps:
+      - name: Send Email Notification
+        uses: dawidd6/action-send-mail@v4
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "[MIMA] Báo cáo kết quả kiểm thử tự động - Môi trường ${{ env.TARGET_ENV }}"
+          to: tranxuanhieu899@gmail.com
+          from: "MIMA QA Automation <${{ secrets.EMAIL_USERNAME }}>"
+          body: |
+            Kính gửi Quý anh/chị,
+
+            Bộ phận Kiểm thử (QA) xin trân trọng thông báo: Hệ thống kiểm thử tự động (Playwright) trên môi trường ${{ env.TARGET_ENV }} đã được thực hiện và hoàn tất thành công.
+
+            THÔNG TIN TỔNG QUAN:
+            - Đơn vị/Dự án: Công ty MIMA
+            - Môi trường kiểm thử: ${{ env.TARGET_ENV }}
+            - Trạng thái tiến trình: Hoàn tất
+
+            BÁO CÁO CHI TIẾT:
+            Kính mời anh/chị truy cập vào đường dẫn dưới đây để xem báo cáo kết quả kiểm thử trực quan trên Allure Dashboard (bao gồm tỷ lệ Pass/Fail và thống kê chi tiết):
+            https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ github.run_number }}/
+
+            Nếu anh/chị cần thêm thông tin hoặc có bất kỳ thắc mắc nào, xin vui lòng phản hồi lại email này.
+
+            Kính chúc Quý anh/chị một ngày làm việc hiệu quả!
+
+            Trân trọng,
+            QA Automation Team - MIMA

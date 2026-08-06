@@ -1,0 +1,150 @@
+{
+  "timestamp": "2026-08-06T08:25:12.106Z",
+  "fileKey": "vVbZZpeQirSeRlj9NsxKJo",
+  "frames": [
+    {
+      "id": "2:2",
+      "name": "trangchu",
+      "page": "Page 1",
+      "y": 136,
+      "height": 6083,
+      "topLevelFrame": "trangchu",
+      "type": "FRAME"
+    },
+    {
+      "id": "66:782",
+      "name": "Frame 5",
+      "page": "Page 1",
+      "y": 4596,
+      "height": 274,
+      "topLevelFrame": "Frame 5",
+      "type": "FRAME"
+    },
+    {
+      "id": "66:829",
+      "name": "Frame 6",
+      "page": "Page 1",
+      "y": 5033,
+      "height": 274,
+      "topLevelFrame": "Frame 6",
+      "type": "FRAME"
+    },
+    {
+      "id": "66:876",
+      "name": "Frame 7",
+      "page": "Page 1",
+      "y": 5428,
+      "height": 274,
+      "topLevelFrame": "Frame 7",
+      "type": "FRAME"
+    },
+    {
+      "id": "20:62",
+      "name": "Component 10",
+      "page": "Page 1",
+      "y": 3521,
+      "height": 21,
+      "topLevelFrame": "Component 10",
+      "type": "INSTANCE"
+    },
+    {
+      "id": "20:71",
+      "name": "Component 11",
+      "page": "Page 1",
+      "y": 3672,
+      "height": 21,
+      "topLevelFrame": "Component 11",
+      "type": "INSTANCE"
+    },
+    {
+      "id": "20:80",
+      "name": "Component 12",
+      "page": "Page 1",
+      "y": 3825,
+      "height": 21,
+      "topLevelFrame": "Component 12",
+      "type": "INSTANCE"
+    },
+    {
+      "id": "20:162",
+      "name": "gioithieu",
+      "page": "Page 1",
+      "y": 72,
+      "height": 4255,
+      "topLevelFrame": "gioithieu",
+      "type": "FRAME"
+    },
+    {
+      "id": "29:561",
+      "name": "sanpham",
+      "page": "Page 1",
+      "y": 75,
+      "height": 2111,
+      "topLevelFrame": "sanpham",
+      "type": "FRAME"
+    },
+    {
+      "id": "39:244",
+      "name": "chitiet",
+      "page": "Page 1",
+      "y": 72,
+      "height": 2477,
+      "topLevelFrame": "chitiet",
+      "type": "FRAME"
+    },
+    {
+      "id": "16:311",
+      "name": "Component 7",
+      "page": "Page 1",
+      "y": 2238,
+      "height": 21,
+      "topLevelFrame": "Component 7",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "7:119",
+      "name": "Component 1",
+      "page": "Page 1",
+      "y": 1618,
+      "height": 274,
+      "topLevelFrame": "Component 1",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "46:368",
+      "name": "menu",
+      "page": "Page 1",
+      "y": -753,
+      "height": 142,
+      "topLevelFrame": "menu",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "46:357",
+      "name": "phone-call",
+      "page": "Page 1",
+      "y": -838,
+      "height": 24,
+      "topLevelFrame": "phone-call",
+      "type": "FRAME"
+    },
+    {
+      "id": "46:360",
+      "name": "phone-call",
+      "page": "Page 1",
+      "y": -838,
+      "height": 24,
+      "topLevelFrame": "phone-call",
+      "type": "FRAME"
+    },
+    {
+      "id": "49:446",
+      "name": "footer",
+      "page": "Page 1",
+      "y": 6528,
+      "height": 414,
+      "topLevelFrame": "footer",
+      "type": "COMPONENT"
+    }
+  ]
+}

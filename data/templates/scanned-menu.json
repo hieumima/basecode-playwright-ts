@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-08-06T10:43:27.981Z",
+  "baseUrl": "https://code4.mimadigi.vn/2026/july/tranquang_108426W/",
+  "menus": {
+    "Bảng điều khiển": [],
+    "Group Giới Thiệu": [
+      "Banner",
+      "Về chúng tôi",
+      "Lịch sử hình thành",
+      "Tầm nhìn",
+      "Sứ mệnh",
+      "Giá trị cốt lõi",
+      "Thông số"
+    ],
+    "Quản lý Sản phẩm": [
+      "Danh mục cấp 1",
+      "Danh mục cấp 2",
+      "Thương hiệu",
+      "Sản phẩm"
+    ],
+    "Quản lý Dịch vụ": [
+      "Danh mục cấp 1",
+      "Dịch vụ"
+    ],
+    "Quản lý bài viết": [
+      "Tài liệu kỹ thuật",
+      "Tin tức",
+      "Dự án",
+      "Vì sao chọn chúng tôi",
+      "Câu hỏi thường gặp",
+      "Chính sách"
+    ],
+    "Quản lý nhận tin": [
+      "Đăng ký nhận tin",
+      "Đăng ký tư vấn"
+    ],
+    "Quản lý trang tĩnh": [
+      "Liên hệ",
+      "Footer",
+      "Copyright"
+    ],
+    "Quản lý hình ảnh - video": [
+      "Favicon (.ico GG rất thích)",
+      "Logo",
+      "Logo footer",
+      "Banner top",
+      "Banner vì sao",
+      "Banner giá trị",
+      "Banner form",
+      "Banner faq",
+      "Popup",
+      "Slideshow",
+      "Mạng xã hội"
+    ],
+    "Quản lý seo page": [
+      "Trang chủ",
+      "Giới thiệu",
+      "Sản phẩm",
+      "Dịch vụ",
+      "Tin tức",
+      "Liên hệ"
+    ],
+    "Thiết lập thông tin": []
+  }
+}
