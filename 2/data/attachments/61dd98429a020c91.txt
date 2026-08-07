@@ -1,0 +1,1 @@
+Giao diện Web thực tế bị thiếu hẳn 2 khối nội dung lớn (Section) so với bản thiết kế Figma là 'Lịch sử hình thành' và 'Thương hiệu đồng hành', đồng thời phần Footer bị lệch layout và thiếu chỉn chu về mặt thẩm mỹ.

@@ -1,0 +1,1 @@
+Giao diện Web thực tế thiếu hụt nhiều section quan trọng so với thiết kế Figma (Dịch vụ nổi bật, Dự án nổi bật, Thương hiệu đồng hành), lỗi cấu trúc hiển thị danh mục sản phẩm và khối Tin tức bị lỗi hiển thị chồng lấn nội dung nghiêm trọng.

@@ -1,0 +1,1 @@
+Giao diện web thực tế bị thiếu nhiều phần quan trọng so với thiết kế Figma, bao gồm danh mục con dạng ảnh/icon, tiêu đề danh mục chính, nút Xem thêm, và toàn bộ khối nội dung mô tả ở phía trên Footer.
