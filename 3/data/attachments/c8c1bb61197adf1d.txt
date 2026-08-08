@@ -1,0 +1,1 @@
+Giao diện thực tế trên Web bị thiếu hoàn toàn 2 phần (section) lớn so với bản thiết kế Figma: phần 'Lịch sử hình thành' (Timeline) và phần 'Thương hiệu đồng hành' (Brand logos). Ngoài ra, cấu trúc bố cục một số phần bị kéo dãn khoảng cách làm mất cân đối.

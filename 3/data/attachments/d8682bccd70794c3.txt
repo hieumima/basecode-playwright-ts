@@ -1,0 +1,1 @@
+Giao diện Web thực tế bị lỗi cấu trúc nghiêm trọng khi thiếu hoàn toàn khối 'Thông số kỹ thuật' ở bên phải, khiến phần 'Chi tiết sản phẩm' bị dãn tràn toàn bộ chiều rộng. Ngoài ra, còn thiếu thông tin 'Mã sp' dưới tiêu đề và các icon trong ô nhập liệu tư vấn bị lỗi hiển thị thành ô vuông rỗng.

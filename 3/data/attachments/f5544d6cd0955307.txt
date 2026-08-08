@@ -1,0 +1,1 @@
+Giao diện Web thực tế thiếu nhiều khối nội dung quan trọng (Category Grid, Tiêu đề danh mục, Nút xem thêm, và Khối SEO/Mô tả) so with bản thiết kế Figma.

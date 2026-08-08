@@ -1,0 +1,31 @@
+══════════════════════════════════════
+   🟢 KẾT QUẢ CHẤM ĐIỂM SEO
+══════════════════════════════════════
+   Điểm số:     91/100
+   Đánh giá:    TỐT
+   Ngưỡng đạt:  70%
+   Kết quả:     PASS
+──────────────────────────────────────
+   Tổng tiêu chí:  22
+   ✅ Đạt:          20
+   ❌ Không đạt:    2
+══════════════════════════════════════
+
+📋 CHI TIẾT LỖI CẦN KHẮC PHỤC (2/22):
+--- LINKS ---
+   1. [Không có broken links (lỗi: 4/56)]
+      → Broken links: tuyen-dung (status: 404), he-thong-cua-hang (status: 404), tin-tuc (status: 404), test-dich-vu-cap-1-1786162761209 (status: 404)
+--- PERFORMANCE ---
+   2. [[📱 MOBILE (ƯU TIÊN)] LCP (Largest Contentful Paint): 11115ms (< 2500ms)]
+      → [📱 MOBILE (ƯU TIÊN)] LCP quá cao: 11115ms (chuẩn: < 2.5s)
+      → Thủ phạm LCP: <p>CÔNG TY TNHH SX - TM - DV - KỸ THUẬT ÂM THANH - ÁNH SÁNG TRẦN QUANG là đơn vị chuyên cung cấp thiết bị âm thanh, ánh sáng và giải pháp thi công hệ thống âm thanh ánh sáng trọn gói tại TP. Hồ Chí Mi...
+
+[Vấn đề]: Phần tử LCP là dạng văn bản (Text/Heading), thời gian hiển thị phụ thuộc chủ yếu vào tốc độ máy chủ và việc tải Web Font.
+[Thông số hiện tại]: Phần tử LCP: <p>CÔNG TY TNHH SX - TM - DV - KỸ THUẬT ÂM THANH - ÁNH SÁNG TRẦN QUANG là đơn vị chuyên cung cấp thiết bị âm thanh, ánh sáng và giải pháp thi công hệ thống âm thanh ánh sáng trọn gói tại TP. Hồ Chí Mi...
+[Chỉ thị hành động]: Tối ưu TTFB của máy chủ xuống dưới 0.3s và ưu tiên tải trước Web Font đang sử dụng.
+[Code thay thế]:
+<!-- Đặt trong <head> -->
+<link rel="preload" href="/path/to/your-font.woff2" as="font" type="font/woff2" crossorigin>
+
+// Đo TTFB:
+curl -o /dev/null -s -w "TTFB: %{time_starttransfer}s\n" https://code4.mimadigi.vn/2026/july/tranquang_108426W/
