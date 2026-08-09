@@ -1,0 +1,1 @@
+Giao diện Web thực tế bị thiếu 3 khối nội dung (section) quan trọng so với bản thiết kế Figma bao gồm: 'Dịch vụ nổi bật', 'Dự án nổi bật' và 'Thương hiệu đồng hành'. Việc thiếu các section này làm thay đổi hoàn toàn cấu trúc trang và trải nghiệm người dùng.
