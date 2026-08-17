@@ -1,1 +1,0 @@
-Giao diện Web thiếu hoàn toàn khối bảng 'Thông số kỹ thuật' ở phần Chi tiết sản phẩm so với bản thiết kế Figma, làm thay đổi bố cục và ảnh hưởng trải nghiệm người dùng.
