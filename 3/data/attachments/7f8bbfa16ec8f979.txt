@@ -1,1 +1,0 @@
-Giao diện Web thực tế thiếu nhiều khối nội dung (sections) quan trọng so với bản thiết kế Figma, đồng thời cấu trúc layout và thiết kế UI ở một số phần tử bị vỡ/khác biệt hoàn toàn.
