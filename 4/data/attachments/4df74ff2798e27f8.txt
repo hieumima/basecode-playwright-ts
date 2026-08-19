@@ -1,1 +1,0 @@
-Giao diện thực tế trên Web bị thiếu nhiều khối nội dung quan trọng so với bản thiết kế Figma: thiếu danh mục con dạng icon phía trên, thiếu tiêu đề trang 'Âm thanh Karaoke', nút 'Xem thêm sản phẩm' và đoạn văn bản giới thiệu/SEO phía dưới danh sách sản phẩm.

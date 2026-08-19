@@ -1,1 +1,0 @@
-Giao diện Web thực tế chưa bám sát thiết kế Figma do thiếu hoàn toàn 2 khối nội dung quan trọng ở phần cuối trang ('Lịch sử hình thành' và 'Thương hiệu đồng hành'), khiến bố cục bị cắt ngắn đột ngột trước khi vào Footer.
